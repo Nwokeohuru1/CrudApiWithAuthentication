@@ -1,4 +1,5 @@
 ﻿using CrudApiWithAuthentication.Data;
+using CrudApiWithAuthentication.Helpers;
 using CrudApiWithAuthentication.Interface;
 using CrudApiWithAuthentication.Models;
 
@@ -13,7 +14,20 @@ namespace CrudApiWithAuthentication.Repository
         }
         public bool CreateUser(User user)
         {
-            var Createuser = _dbContextConn.Add(user);
+            var pass = PasswordHash.Hash(user.Password);
+            var newUser = new User
+            { Address = user.Address,
+                Username = user.Username,
+                Password = pass,
+                DateCreated = user.DateCreated,
+                Role = user.Role,
+                Delflag = user.Delflag,
+                Id = user.Id
+                
+              
+            };
+            //var Createuser = _dbContextConn.Add(newUser);
+             _dbContextConn.Add(newUser);
             _dbContextConn.SaveChanges();
             return true;
         }
@@ -48,7 +62,20 @@ namespace CrudApiWithAuthentication.Repository
 
         public bool UpdateUser(User user)
         {
-            var Updateuser = _dbContextConn.users.Update(user);
+            var password = PasswordHash.Hash(user.Password);
+            var UpdatedUser = new User
+            {
+                Address = user.Address,
+                Username = user.Username,
+                Password = password,
+                DateCreated = user.DateCreated,
+                Role = user.Role,
+                Delflag = user.Delflag,
+                Id = user.Id
+
+
+            };
+            _dbContextConn.users.Update(UpdatedUser);
             _dbContextConn.SaveChanges();
             return true;
         }

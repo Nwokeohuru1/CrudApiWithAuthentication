@@ -8,7 +8,7 @@ namespace CrudApiWithAuthentication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
@@ -56,7 +56,7 @@ namespace CrudApiWithAuthentication.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        [Authorize(Roles ="Admin")]
+       // [Authorize(Roles ="Admin")]
         public IActionResult DeleteUser(int id)
         {
             var user = _userServices.DeleteUser(id);
@@ -73,7 +73,7 @@ namespace CrudApiWithAuthentication.Controllers
 
         [HttpPost]
         [Route("Update")]
-        [Authorize(Roles ="Admin")]
+       // [Authorize(Roles ="Admin")]
         public IActionResult UpdateUser(User user)
         {
             var updateUser = _userServices.UpdateUser(user);
