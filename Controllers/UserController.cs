@@ -36,47 +36,47 @@ namespace CrudApiWithAuthentication.Controllers
 
         [HttpGet]
         [Route("AllUsers")]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
-            var user = _userServices.GetAllUsers();
+            var user = await _userServices.GetAllUsers();
             if (user == null)
             {
-                return NoContent();
+                return NotFound();
             }
             return Ok(user);
         }
 
         [HttpGet]
         [Route("User")]
-        public IActionResult GetUser(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = _userServices.GetUser(id);
+            var user = await _userServices.GetUser(id);
             return Ok(user);
         }
 
         [HttpPost]
         [Route("Delete")]
        // [Authorize(Roles ="Admin")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = _userServices.DeleteUser(id);
+            var user = await _userServices.DeleteUser(id);
             return StatusCode(StatusCodes.Status200OK, "User Deleted!!!");
         }
 
         [HttpPost]
         [Route("Create")]
-        public IActionResult CreateUser(User user)
+        public async Task<IActionResult> CreateUser(User user)
         {
-            var Createuser = _userServices.CreateUser(user);
+            var Createuser = await _userServices.CreateUser(user);
             return StatusCode(StatusCodes.Status201Created, "User created Successfully!");
         }
 
         [HttpPost]
         [Route("Update")]
        // [Authorize(Roles ="Admin")]
-        public IActionResult UpdateUser(User user)
+        public async Task<IActionResult> UpdateUser(User user)
         {
-            var updateUser = _userServices.UpdateUser(user);
+            var updateUser = await _userServices.UpdateUser(user);
             return StatusCode(StatusCodes.Status200OK, "Successfully Updated");
         }
 

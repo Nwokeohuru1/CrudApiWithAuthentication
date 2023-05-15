@@ -4,10 +4,10 @@ namespace CrudApiWithAuthentication.Interface
 {
     public interface IUserServices
     {
-        List<User> GetAllUsers();
-        User GetUser(int id);
-        bool CreateUser(User user);
-        bool UpdateUser(User user);
-        bool DeleteUser(int id);
+        Task<List<User>> GetAllUsers();
+        Task<User> GetUser(int id);
+        Task<bool> CreateUser(User user);
+        Task<bool> UpdateUser(User user);
+        Task<bool> DeleteUser(int id);
     }
 }

@@ -2,6 +2,7 @@
 using CrudApiWithAuthentication.Helpers;
 using CrudApiWithAuthentication.Interface;
 using CrudApiWithAuthentication.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrudApiWithAuthentication.Repository
 {
@@ -12,7 +13,7 @@ namespace CrudApiWithAuthentication.Repository
         {
             _dbContextConn= dbContextConn;
         }
-        public bool CreateUser(User user)
+        public async Task<bool> CreateUser(User user)
         {
             var pass = PasswordHash.Hash(user.Password);
             var newUser = new User
@@ -27,14 +28,14 @@ namespace CrudApiWithAuthentication.Repository
               
             };
             //var Createuser = _dbContextConn.Add(newUser);
-             _dbContextConn.Add(newUser);
-            _dbContextConn.SaveChanges();
-            return true;
+                _dbContextConn.Add(newUser);
+                await _dbContextConn.SaveChangesAsync();
+           return true;
         }
 
-        public bool DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            var user = GetUser(id);
+            var user = await GetUser(id);
             if (user == null)
             {
                 return false;
@@ -42,25 +43,25 @@ namespace CrudApiWithAuthentication.Repository
             // user.Delflag = true;
             //_dbContextConn.Update(user);
             _dbContextConn.Remove(user);
-            _dbContextConn.SaveChanges();
+            await _dbContextConn.SaveChangesAsync();
             return true;
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
             var user = new List<User>();
 
-            user = _dbContextConn.users.Where(o => o.Delflag == false).ToList();
+            user = await _dbContextConn.users.Where(o => o.Delflag == false).ToListAsync();
             return user;
         }
 
-        public User GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            var user = _dbContextConn.users.Where(u => u.Id == id && u.Delflag == false).FirstOrDefault();
+            var user = await _dbContextConn.users.Where(u => u.Id == id && u.Delflag == false).FirstOrDefaultAsync();
             return user;
         }
 
-        public bool UpdateUser(User user)
+        public async Task<bool> UpdateUser(User user)
         {
             var password = PasswordHash.Hash(user.Password);
             var UpdatedUser = new User
@@ -76,7 +77,7 @@ namespace CrudApiWithAuthentication.Repository
 
             };
             _dbContextConn.users.Update(UpdatedUser);
-            _dbContextConn.SaveChanges();
+            await _dbContextConn.SaveChangesAsync();
             return true;
         }
     }
