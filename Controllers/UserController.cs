@@ -75,22 +75,11 @@ namespace CrudApiWithAuthentication.Controllers
         [Route("Update")]
        // [Authorize(Roles ="Admin")]
         public async Task<IActionResult> UpdateUser(User user)
-        {
-            var updateUser = await _userServices.UpdateUser(user);
+        {  
+            await _userServices.UpdateUser(user);
+         
             return StatusCode(StatusCodes.Status200OK, "Successfully Updated");
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

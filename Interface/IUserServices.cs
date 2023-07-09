@@ -6,6 +6,7 @@ namespace CrudApiWithAuthentication.Interface
     {
         Task<List<User>> GetAllUsers();
         Task<User> GetUser(int id);
+        Task<User> GetUserId(int id);
         Task<bool> CreateUser(User user);
         Task<bool> UpdateUser(User user);
         Task<bool> DeleteUser(int id);

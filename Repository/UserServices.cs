@@ -2,7 +2,9 @@
 using CrudApiWithAuthentication.Helpers;
 using CrudApiWithAuthentication.Interface;
 using CrudApiWithAuthentication.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace CrudApiWithAuthentication.Repository
 {
@@ -28,7 +30,7 @@ namespace CrudApiWithAuthentication.Repository
               
             };
             //var Createuser = _dbContextConn.Add(newUser);
-                _dbContextConn.Add(newUser);
+                await _dbContextConn.AddAsync(newUser);
                 await _dbContextConn.SaveChangesAsync();
            return true;
         }
@@ -49,9 +51,11 @@ namespace CrudApiWithAuthentication.Repository
 
         public async Task<List<User>> GetAllUsers()
         {
+            Log.Information("GetAllUsers Called || || ||");
             var user = new List<User>();
 
             user = await _dbContextConn.users.Where(o => o.Delflag == false).ToListAsync();
+           // Log.Information("GetAllUser Result => {@user}", user);
             return user;
         }
 
@@ -61,8 +65,16 @@ namespace CrudApiWithAuthentication.Repository
             return user;
         }
 
+        public async Task<User> GetUserId(int id)
+        {
+            var user = await _dbContextConn.users.FindAsync(id);
+            return user;
+            
+        }
+
         public async Task<bool> UpdateUser(User user)
         {
+            
             var password = PasswordHash.Hash(user.Password);
             var UpdatedUser = new User
             {
@@ -80,5 +92,6 @@ namespace CrudApiWithAuthentication.Repository
             await _dbContextConn.SaveChangesAsync();
             return true;
         }
+
     }
 }

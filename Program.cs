@@ -4,6 +4,7 @@ using CrudApiWithAuthentication.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 namespace CrudApiWithAuthentication
@@ -15,6 +16,8 @@ namespace CrudApiWithAuthentication
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+            builder.Host.UseSerilog();
 
             builder.Services.AddAuthentication(k =>
             {
@@ -60,6 +63,7 @@ namespace CrudApiWithAuthentication
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseSerilogRequestLogging();
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -5,7 +5,7 @@ namespace CrudApiWithAuthentication.Models
     public class User
     {
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
         public string? Username { get; set; }
