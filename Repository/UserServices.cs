@@ -76,19 +76,16 @@ namespace CrudApiWithAuthentication.Repository
         {
             
             var password = PasswordHash.Hash(user.Password);
-            var UpdatedUser = new User
-            {
-                Address = user.Address,
-                Username = user.Username,
-                Password = password,
-                DateCreated = user.DateCreated,
-                Role = user.Role,
-                Delflag = user.Delflag,
-                Id = user.Id
-
-
-            };
-            _dbContextConn.users.Update(UpdatedUser);
+            
+            var userToUpdate = await GetUser(user.Id);
+                userToUpdate.Id = user.Id;
+                userToUpdate.Password = password;
+                userToUpdate.Delflag = user.Delflag;
+                userToUpdate.Username = user.Username;
+                userToUpdate.Role = user.Role;
+                userToUpdate.Address = user.Address;
+            
+            _dbContextConn.users.Update(userToUpdate);
             await _dbContextConn.SaveChangesAsync();
             return true;
         }
