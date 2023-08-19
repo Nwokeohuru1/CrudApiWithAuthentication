@@ -13,10 +13,12 @@ namespace CrudApiWithAuthentication.Controllers
     {
         private readonly IUserServices _userServices;
         private readonly IJWTservices _jWTservices;
+        
         public UserController(IUserServices userServices, IJWTservices jWTservices)
         {
             _userServices = userServices;
             _jWTservices = jWTservices;
+            
         }
 
 
@@ -85,11 +87,5 @@ namespace CrudApiWithAuthentication.Controllers
          
             return StatusCode(StatusCodes.Status200OK, "Successfully Updated");
         }
-
-
-
-
-
-
     }
 }

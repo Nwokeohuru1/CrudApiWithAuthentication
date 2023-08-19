@@ -11,6 +11,8 @@ namespace CrudApiWithAuthentication
 {
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +47,7 @@ namespace CrudApiWithAuthentication
 
 
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IPayStackPayment, PayStackPayment>();
             builder.Services.AddScoped<IJWTservices, JWTservices>();
 
             var connection = builder.Configuration.GetConnectionString("DefualtConnection");

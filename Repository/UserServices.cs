@@ -84,7 +84,7 @@ namespace CrudApiWithAuthentication.Repository
                 userToUpdate.Username = user.Username;
                 userToUpdate.Role = user.Role;
                 userToUpdate.Address = user.Address;
-            
+
             _dbContextConn.users.Update(userToUpdate);
             await _dbContextConn.SaveChangesAsync();
             return true;
